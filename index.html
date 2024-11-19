@@ -1,0 +1,297 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>index Product Page with Enhanced Filters</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .product-card {
+      margin-bottom: 20px;
+    }
+    .filter-section {
+      border-right: 1px solid #ddd;
+      padding-right: 20px;
+    }
+    .cart-badge {
+      position: relative;
+    }
+    .cart-badge .badge {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+    }
+    .popup-message {
+      display: none;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background-color: #28a745;
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Shop</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link cart-badge" href="cart.html">
+              Cart <span class="badge bg-primary" id="cart-count">0</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Container -->
+  <div class="container mt-5">
+    <div class="row">
+      <!-- Filter Section -->
+      <div class="col-md-3 filter-section">
+        <h5>Winter Filters</h5>
+
+        <!-- Category Filter -->
+        <div class="mb-3">
+          <label for="categoryFilter" class="form-label">Product Categories</label>
+          <select class="form-select" id="categoryFilter">
+            <option value="">All</option>
+            <option value="dress">Dress</option>
+            <option value="jewelry">Jewelry</option>
+            <option value="makeup">Makeup</option>
+          </select>
+        </div>
+
+        <!-- Color Filter -->
+        <div class="mb-3">
+          <label for="colorFilter" class="form-label">Color(For Dress)</label>
+          <select class="form-select" id="colorFilter">
+            <option value="">All</option>
+            <option value="red">Red</option>
+            <option value="blue">Blue</option>
+            <option value="green">Green</option>
+            <option value="gold">Gold</option>
+            <option value="black">Black</option>
+            <option value="white">White</option>
+          </select>
+        </div>
+
+        <!-- Metal Type Filter -->
+        <div class="mb-3">
+          <label for="metalFilter" class="form-label">Metal Type (For Jewelry)</label>
+          <select class="form-select" id="metalFilter">
+            <option value="">All</option>
+            <option value="gold">Gold</option>
+            <option value="silver">Silver</option>
+            <option value="platinum">Platinum</option>
+          </select>
+        </div>
+
+        <!-- Price Filter -->
+        <div class="mb-3">
+          <label for="priceFilter" class="form-label">Price Range</label>
+          <input type="range" class="form-range" id="priceFilter" min="0" max="1000" value="1000" oninput="updatePriceLabel(this.value)">
+          <span id="priceLabel">$1000</span>
+        </div>
+
+        <button class="btn btn-secondary" onclick="clearFilters()">Clear Filters</button>
+
+      </div>
+
+      <!-- Product Section -->
+      <div class="col-md-9 row" id="product-list">
+        <!-- Product Cards -->
+        <div class="col-md-4 product-card" data-category="dress" data-color="blue" data-metal="" data-price="500">
+          <div class="card">
+            <img src="https://staranddaisy.in/wp-content/uploads/2022/04/204627fsd.jpg" class="card-img-top" alt="Blue Dress">
+            <div class="card-body">
+              <h5 class="card-title">Blue Dress</h5>
+              <p class="card-text">Price: $500</p>
+              <input type="number" class="form-control mb-2" placeholder="Quantity" min="1" value="1">
+              <button class="btn btn-primary" onclick="addToCart('Blue Dress', 500, 'https://via.placeholder.com/150', this.previousElementSibling.value)">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 product-card" data-category="jewelry" data-color="" data-metal="gold" data-price="300">
+          <div class="card">
+            <img src="https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcS_AUE8h1NqloT6JYpC1VsGk3zp64CK5-B7LeUMxoedQXsMNZCdo5IyOmbBHX9TDarHQDhGcdkG71dKU8pGMl0s6tpTLg426aZIChekTws&usqp=CAE" class="card-img-top" alt="Gold Jewelry">
+            <div class="card-body">
+              <h5 class="card-title">Gold Jewelry</h5>
+              <p class="card-text">Price: $300</p>
+              <input type="number" class="form-control mb-2" placeholder="Quantity" min="1" value="1">
+              <button class="btn btn-primary" onclick="addToCart('Gold Jewelry', 300, 'https://via.placeholder.com/150', this.previousElementSibling.value)">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 product-card" data-category="makeup" data-color="red" data-metal="" data-price="20">
+          <div class="card">
+            <img src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTxAEEA6lVvPus4XMt9HTPqeunFJdQU3lf2uczJfvxzni21mRNIYOCVb9cGtpK3sktoeCUKZfcsTbdvpnzvdOFtsRCxf2MQUcWv2Mbk_qQtai_q-EbjuwZiCg&usqp=CAE" class="card-img-top" alt="Red Lipstick">
+            <div class="card-body">
+              <h5 class="card-title">Red Lipstick</h5>
+              <p class="card-text">Price: $20</p>
+              <input type="number" class="form-control mb-2" placeholder="Quantity" min="1" value="1">
+              <button class="btn btn-primary" onclick="addToCart('Red Lipstick', 20, 'https://via.placeholder.com/150', this.previousElementSibling.value)">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 product-card" data-category="dress" data-color="red" data-metal="" data-price="450">
+          <div class="card">
+            <img src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT9BJYLbqSb3l7xd9zJ_PaT9_Z9Q-hiASyNqCT-KDrWYR3P_NJwiUWZhrgjiuCN0hFLplmNmNrfl_uy55TDlSNWj5Vn4l3tPhyIXBMp82M&usqp=CAE" class="card-img-top" alt="Red Dress">
+            <div class="card-body">
+              <h5 class="card-title">Red Dress</h5>
+              <p class="card-text">Price: $450</p>
+              <input type="number" class="form-control mb-2" placeholder="Quantity" min="1" value="1">
+              <button class="btn btn-primary" onclick="addToCart('Red Dress', 450, 'https://via.placeholder.com/150', this.previousElementSibling.value)">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 product-card" data-category="jewelry" data-color="" data-metal="silver" data-price="400">
+          <div class="card">
+            <img src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcR3k1EmwzAdMnXeXU0bEELArL15Qz1JaB0vk4xMQP58sEkapPrfnPKUX_MoeSN3LOQgE-Oj_sQi_SwzDVIK8dlG4TfboIN64oP8Osy3fM4&usqp=CAE" class="card-img-top" alt="Silver Necklace">
+            <div class="card-body">
+              <h5 class="card-title">Silver Necklace</h5>
+              <p class="card-text">Price: $400</p>
+              <input type="number" class="form-control mb-2" placeholder="Quantity" min="1" value="1">
+              <button class="btn btn-primary" onclick="addToCart('Silver Necklace', 400, 'https://via.placeholder.com/150', this.previousElementSibling.value)">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 product-card" data-category="makeup" data-color="pink" data-metal="" data-price="30">
+          <div class="card">
+            <img src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcS4NJfCWDIFxi8LlfVpveqjVj52wW1Z9GVxW-lKVNmtPPPiT5zmPG3zRbD5z2STuFf8ZAiF81iQrar1M508d4Nb_mGwolvzIq7w5gJkoFT3MNVAdTbGc5ynsw&usqp=CAE" class="card-img-top" alt="Pink Lip Gloss">
+            <div class="card-body">
+              <h5 class="card-title">Pink Lip Gloss</h5>
+              <p class="card-text">Price: $30</p>
+              <input type="number" class="form-control mb-2" placeholder="Quantity" min="1" value="1">
+              <button class="btn btn-primary" onclick="addToCart('Pink Lip Gloss', 30, 'https://via.placeholder.com/150', this.previousElementSibling.value)">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 product-card" data-category="dress" data-color="green" data-metal="" data-price="600">
+          <div class="card">
+            <img src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRXjqM5D7Of3FGDtCKcLlmvY4_f4BVmvEkQXisB5G1SVmgRwOIXVgN2jCcBxggKNTtyxiy2MoR8cRRcbJCgxgY1gvIzKCFguON__Fcy2s9nBigbobvh09ed&usqp=CAE">
+            <div class="card-body">
+              <h5 class="card-title">Green Dress</h5>
+              <p class="card-text">Price: $600</p>
+              <input type="number" class="form-control mb-2" placeholder="Quantity" min="1" value="1">
+              <button class="btn btn-primary" onclick="addToCart('Green Dress', 600, 'https://via.placeholder.com/150', this.previousElementSibling.value)">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popup Message -->
+  <div class="popup-message" id="popup-message">Item added to cart!</div>
+
+  <script>
+    // Function to add items to the cart
+    let cartCount = 0;
+    
+    function addToCart(productName, price, imageUrl, quantity) {
+      // Update cart count
+      cartCount += parseInt(quantity);
+      document.getElementById('cart-count').innerText = cartCount;
+
+      // Show popup message
+      const popup = document.getElementById('popup-message');
+      popup.style.display = 'block';
+      setTimeout(() => {
+        popup.style.display = 'none';
+      }, 2000);
+    }
+
+    // Function to filter products
+    document.getElementById('categoryFilter').addEventListener('change', filterProducts);
+    document.getElementById('colorFilter').addEventListener('change', filterProducts);
+    document.getElementById('metalFilter').addEventListener('change', filterProducts);
+    document.getElementById('priceFilter').addEventListener('input', filterProducts);
+
+    function filterProducts() {
+      const category = document.getElementById('categoryFilter').value;
+      const color = document.getElementById('colorFilter').value;
+      const metal = document.getElementById('metalFilter').value;
+      const price = document.getElementById('priceFilter').value;
+
+      const productCards = document.querySelectorAll('.product-card');
+
+      productCards.forEach(card => {
+        const cardCategory = card.getAttribute('data-category');
+        const cardColor = card.getAttribute('data-color');
+        const cardMetal = card.getAttribute('data-metal');
+        const cardPrice = card.getAttribute('data-price');
+
+        const matchesCategory = !category || cardCategory === category;
+        const matchesColor = !color || cardColor === color;
+        const matchesMetal = !metal || cardMetal === metal;
+        const matchesPrice = !price || cardPrice <= price;
+
+        if (matchesCategory && matchesColor && matchesMetal && matchesPrice) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Function to update price label
+    function updatePriceLabel(value) {
+      document.getElementById('priceLabel').innerText = `$${value}`;
+    }
+
+    // Function to clear filters
+    function clearFilters() {
+      document.getElementById('categoryFilter').value = '';
+      document.getElementById('colorFilter').value = '';
+      document.getElementById('metalFilter').value = '';
+      document.getElementById('priceFilter').value = '1000';
+      // updatePriceLabel(1000);
+      filterProducts();
+    }
+
+    function addToCart(productName, price, imageUrl, quantity) {
+  // Update cart count
+  cartCount += parseInt(quantity);
+  document.getElementById('cart-count').innerText = cartCount;
+
+  // Save to local storage
+  const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+  const existingItem = cartItems.find(item => item.name === productName);
+
+  if (existingItem) {
+    existingItem.quantity += parseInt(quantity); // Update quantity
+  } else {
+    cartItems.push({ name: productName, price: price, image: imageUrl, quantity: parseInt(quantity) });
+  }
+  
+  localStorage.setItem('cart', JSON.stringify(cartItems));
+
+  // Show popup message
+  const popup = document.getElementById('popup-message');
+  popup.style.display = 'block';
+  setTimeout(() => {
+    popup.style.display = 'none';
+  }, 2000);
+}
+
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+<!-- <img src="https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRTB245YS_CdkNp6YEGXK_hN_OTX1oq10KPasAdc7mx91JsYrvY0o3-9CywqFhhVjnEsOZmSqMQ-g1GhsNGhZOL2JUxtSsUqOY-R4ZmFaU" class="card-img-top" alt="Red Dress"> -->

@@ -1,0 +1,256 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Page with Enhanced Filters</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .product-card {
+      margin-bottom: 20px;
+    }
+    .filter-section {
+      border-right: 1px solid #ddd;
+      padding-right: 20px;
+    }
+    .cart-badge {
+      position: relative;
+    }
+    .cart-badge .badge {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+    }
+    .popup-message {
+      display: none;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background-color: #28a745;
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Shop</a>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link cart-badge" href="cart.html">
+              Cart <span class="badge bg-primary" id="cart-count">0</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Container -->
+  <div class="container mt-5">
+    <div class="row">
+      <!-- Filter Section -->
+      <div class="col-md-3 filter-section">
+        <h5>Winter Filters</h5>
+
+        <!-- Category Filter -->
+        <div class="mb-3">
+          <label for="categoryFilter" class="form-label">Product Categories</label>
+          <select class="form-select" id="categoryFilter">
+            <option value="">All</option>
+            <option value="dress">Dress</option>
+            <option value="jewelry">Jewelry</option>
+            <option value="makeup">Makeup</option>
+          </select>
+        </div>
+
+        <!-- Color Filter -->
+        <div class="mb-3">
+          <label for="colorFilter" class="form-label">Color (For Dress)</label>
+          <select class="form-select" id="colorFilter">
+            <option value="">All</option>
+            <option value="red">Red</option>
+            <option value="blue">Blue</option>
+            <option value="green">Green</option>
+            <option value="gold">Gold</option>
+            <option value="black">Black</option>
+            <option value="white">White</option>
+          </select>
+        </div>
+
+        <!-- Metal Type Filter -->
+        <div class="mb-3">
+          <label for="metalFilter" class="form-label">Metal Type (For Jewelry)</label>
+          <select class="form-select" id="metalFilter">
+            <option value="">All</option>
+            <option value="gold">Gold</option>
+            <option value="silver">Silver</option>
+            <option value="platinum">Platinum</option>
+          </select>
+        </div>
+
+        <!-- Price Filter -->
+        <div class="mb-3">
+          <label for="priceFilter" class="form-label">Price Range</label>
+          <input type="range" class="form-range" id="priceFilter" min="0" max="1000" value="1000" oninput="updatePriceLabel(this.value)">
+          <span id="priceLabel">$1000</span>
+        </div>
+
+        <button class="btn btn-secondary" onclick="clearFilters()">Clear Filters</button>
+
+      </div>
+
+      <!-- Product Section -->
+      <div class="col-md-9 row" id="product-list">
+        <!-- Product Cards -->
+        <div class="col-md-4 product-card" data-category="dress" data-color="blue" data-metal="" data-price="500">
+          <div class="card">
+            <img src="https://staranddaisy.in/wp-content/uploads/2022/04/204627fsd.jpg" class="card-img-top" alt="Blue Dress">
+            <div class="card-body">
+              <h5 class="card-title">Blue Dress</h5>
+              <p class="card-text">Price: $500</p>
+              <input type="number" class="form-control mb-2" placeholder="Quantity" min="1" value="1">
+              <button class="btn btn-primary" onclick="addToCart('Blue Dress', 500, 'https://via.placeholder.com/150', this.previousElementSibling.value)">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 product-card" data-category="jewelry" data-color="" data-metal="gold" data-price="300">
+          <div class="card">
+            <img src="https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcS_AUE8h1NqloT6JYpC1VsGk3zp64CK5-B7LeUMxoedQXsMNZCdo5IyOmbBHX9TDarHQDhGcdkG71dKU8pGMl0s6tpTLg426aZIChekTws&usqp=CAE" class="card-img-top" alt="Gold Jewelry">
+            <div class="card-body">
+              <h5 class="card-title">Gold Jewelry</h5>
+              <p class="card-text">Price: $300</p>
+              <input type="number" class="form-control mb-2" placeholder="Quantity" min="1" value="1">
+              <button class="btn btn-primary" onclick="addToCart('Gold Jewelry', 300, 'https://via.placeholder.com/150', this.previousElementSibling.value)">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 product-card" data-category="makeup" data-color="red" data-metal="" data-price="20">
+          <div class="card">
+            <img src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTxAEEA6lVvPus4XMt9HTPqeunFJdQU3lf2uczJfvxzni21mRNIYOCVb9cGtpK3sktoeCUKZfcsTbdvpnzvdOFtsRCxf2MQUcWv2Mbk_qQtai_q-EbjuwZiCg&usqp=CAE" class="card-img-top" alt="Red Lipstick">
+            <div class="card-body">
+              <h5 class="card-title">Red Lipstick</h5>
+              <p class="card-text">Price: $20</p>
+              <input type="number" class="form-control mb-2" placeholder="Quantity" min="1" value="1">
+              <button class="btn btn-primary" onclick="addToCart('Red Lipstick', 20, 'https://via.placeholder.com/150', this.previousElementSibling.value)">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 product-card" data-category="dress" data-color="red" data-metal="" data-price="450">
+          <div class="card">
+            <img src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT9BJYLbqSb3l7xd9zJ_PaT9_Z9Q-hiASyNqCT-KuNWfWWExHTaVfowC4Qck1soqufGtw0wMe_bv8MoMkXLT8VrYuc4hLsDpYStAkpH1V8W_cC1R3q7hUwqOPuY&usqp=CAE" class="card-img-top" alt="Red Dress">
+            <div class="card-body">
+              <h5 class="card-title">Red Dress</h5>
+              <p class="card-text">Price: $450</p>
+              <input type="number" class="form-control mb-2" placeholder="Quantity" min="1" value="1">
+              <button class="btn btn-primary" onclick="addToCart('Red Dress', 450, 'https://via.placeholder.com/150', this.previousElementSibling.value)">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popup Notification -->
+  <div class="popup-message" id="popup-message">Item added to cart!</div>
+
+  <!-- Script Section -->
+  <script>
+    // Local Storage Key
+    const cartKey = 'shoppingCart';
+
+    // Load Cart Count from Local Storage
+    function loadCartCount() {
+      const cartItems = JSON.parse(localStorage.getItem(cartKey)) || {};
+      const totalCount = Object.values(cartItems).reduce((sum, item) => sum + item.quantity, 0);
+      document.getElementById('cart-count').innerText = totalCount;
+    }
+
+    // Update Price Label
+    function updatePriceLabel(value) {
+      document.getElementById('priceLabel').innerText = '$' + value;
+    }
+
+    // Clear Filters
+    function clearFilters() {
+      document.getElementById('categoryFilter').value = '';
+      document.getElementById('colorFilter').value = '';
+      document.getElementById('metalFilter').value = '';
+      document.getElementById('priceFilter').value = '1000';
+      updatePriceLabel(1000);
+      displayProducts();
+    }
+
+    // Display Products Based on Filters
+    function displayProducts() {
+      const category = document.getElementById('categoryFilter').value;
+      const color = document.getElementById('colorFilter').value;
+      const metal = document.getElementById('metalFilter').value;
+      const price = document.getElementById('priceFilter').value;
+
+      const products = document.querySelectorAll('.product-card');
+      products.forEach(product => {
+        const productCategory = product.getAttribute('data-category');
+        const productColor = product.getAttribute('data-color');
+        const productMetal = product.getAttribute('data-metal');
+        const productPrice = parseInt(product.getAttribute('data-price'));
+
+        const isCategoryMatch = category === '' || productCategory === category;
+        const isColorMatch = color === '' || productColor === color;
+        const isMetalMatch = metal === '' || productMetal === metal;
+        const isPriceMatch = productPrice <= price;
+
+        if (isCategoryMatch && isColorMatch && isMetalMatch && isPriceMatch) {
+          product.style.display = 'block';
+        } else {
+          product.style.display = 'none';
+        }
+      });
+    }
+
+    // Add to Cart Function
+    function addToCart(productName, productPrice, productImage, quantity) {
+      const cartItems = JSON.parse(localStorage.getItem(cartKey)) || {};
+      if (cartItems[productName]) {
+        cartItems[productName].quantity += parseInt(quantity);
+      } else {
+        cartItems[productName] = {
+          price: productPrice,
+          image: productImage,
+          quantity: parseInt(quantity),
+        };
+      }
+      localStorage.setItem(cartKey, JSON.stringify(cartItems));
+      loadCartCount();
+      showPopupMessage();
+    }
+
+    // Show Popup Message
+    function showPopupMessage() {
+      const popupMessage = document.getElementById('popup-message');
+      popupMessage.style.display = 'block';
+      setTimeout(() => {
+        popupMessage.style.display = 'none';
+      }, 2000);
+    }
+
+    // Load Initial Cart Count
+    loadCartCount();
+
+    // Event Listeners
+    document.getElementById('categoryFilter').addEventListener('change', displayProducts);
+    document.getElementById('colorFilter').addEventListener('change', displayProducts);
+    document.getElementById('metalFilter').addEventListener('change', displayProducts);
+    document.getElementById('priceFilter').addEventListener('input', displayProducts);
+  </script>
+</body>
+</html>

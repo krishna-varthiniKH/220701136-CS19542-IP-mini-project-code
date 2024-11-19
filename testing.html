@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Page</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <style>
+        .filter {
+            border-right: 1px solid #ddd;
+        }
+        .remove-item {
+            cursor: pointer;
+            color: red;
+            font-weight: bold;
+        }
+        .rating {
+            display: flex;
+            cursor: pointer;
+            color: gold;
+        }
+        .star {
+            font-size: 1.5rem; /* Adjust the size of the stars */
+        }
+        .star.selected {
+            color: gold; /* Color for selected stars */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="row">
+        <!-- Filter Section -->
+        <div class="col-md-3 filter">
+            <h5>Filter Products</h5>
+            <div class="form-group">
+                <label for="category">Category:</label>
+                <select class="form-control" id="category">
+                    <option value="all">All</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="clothing">Clothing</option>
+                    <option value="home">Home Appliances</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="priceMin">Min Price:</label>
+                <input type="number" class="form-control" id="priceMin" placeholder="0">
+            </div>
+            <div class="form-group">
+                <label for="priceMax">Max Price:</label>
+                <input type="number" class="form-control" id="priceMax" placeholder="1000">
+            </div>
+            <button class="btn btn-primary" id="applyFilter">Apply Filter</button>
+        </div>
+
+        <!-- Product Section -->
+        <div class="col-md-9">
+            <h2>Available Products</h2>
+            <div class="row" id="product-list">
+                <div class="col-md-4 mb-4 product-item" data-category="electronics" data-price="10.00" data-color="red" data-brand="brandA" data-rating="0">
+                    <div class="card">
+                        <img src="https://via.placeholder.com/150" class="card-img-top" alt="Product 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 1</h5>
+                            <p class="card-text">$10.00</p>
+                            <input type="number" class="form-control mb-2 quantity" value="1" min="1" style="width: 60px; display: inline-block;">
+                            <button class="btn btn-primary add-to-cart" data-name="Product 1" data-price="10.00">Add to Cart</button>
+                            <div class="rating" data-rating="0">
+                                <span class="star" data-value="1">&#9733;</span>
+                                <span class="star" data-value="2">&#9733;</span>
+                                <span class="star" data-value="3">&#9733;</span>
+                                <span class="star" data-value="4">&#9733;</span>
+                                <span class="star" data-value="5">&#9733;</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 product-item" data-category="clothing" data-price="15.00" data-color="blue" data-brand="brandB" data-rating="0">
+                    <div class="card">
+                        <img src="https://via.placeholder.com/150" class="card-img-top" alt="Product 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 2</h5>
+                            <p class="card-text">$15.00</p>
+                            <input type="number" class="form-control mb-2 quantity" value="1" min="1" style="width: 60px; display: inline-block;">
+                            <button class="btn btn-primary add-to-cart" data-name="Product 2" data-price="15.00">Add to Cart</button>
+                            <div class="rating" data-rating="0">
+                                <span class="star" data-value="1">&#9733;</span>
+                                <span class="star" data-value="2">&#9733;</span>
+                                <span class="star" data-value="3">&#9733;</span>
+                                <span class="star" data-value="4">&#9733;</span>
+                                <span class="star" data-value="5">&#9733;</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4 product-item" data-category="home" data-price="20.00" data-color="green" data-brand="brandC" data-rating="0">
+                    <div class="card">
+                        <img src="https://via.placeholder.com/150" class="card-img-top" alt="Product 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Product 3</h5>
+                            <p class="card-text">$20.00</p>
+                            <input type="number" class="form-control mb-2 quantity" value="1" min="1" style="width: 60px; display: inline-block;">
+                            <button class="btn btn-primary add-to-cart" data-name="Product 3" data-price="20.00">Add to Cart</button>
+                            <div class="rating" data-rating="0">
+                                <span class="star" data-value="1">&#9733;</span>
+                                <span class="star" data-value="2">&#9733;</span>
+                                <span class="star" data-value="3">&#9733;</span>
+                                <span class="star" data-value="4">&#9733;</span>
+                                <span class="star" data-value="5">&#9733;</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Cart Modal -->
+<div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="cartModalLabel">Your Cart</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="cart-content">
+                <!-- Cart details will be added here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" id="clear-cart-button">Clear Cart</button>
+                <button type="button" class="btn btn-primary" id="checkout-button">Checkout</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Initialize cart from local storage
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Function to update cart content
+        function updateCartContent() {
+            const cartContent = $('#cart-content');
+            cartContent.empty(); // Clear previous content
+
+            // Populate cart with items from the cart array
+            if (cart.length === 0) {
+                cartContent.append('<p>Your cart is empty.</p>');
+            } else {
+                cart.forEach((item, index) => {
+                    cartContent.append(`
+                        <div class="d-flex justify-content-between align-items-center">
+                            <p>${item.name} (x${item.quantity}) - $${item.price}</p>
+                            <span class="remove-item" data-index="${index}">Remove</span>
+                        </div>
+                    `);
+                });
+            }
+        }
+
+        // Add to cart functionality
+        $(document).on('click', '.add-to-cart', function() {
+            const name = $(this).data('name');
+            const price = $(this).data('price');
+            const quantity = $(this).siblings('.quantity').val();
+
+            // Check if item is already in the cart
+            const existingItemIndex = cart.findIndex(item => item.name === name);
+            if (existingItemIndex > -1) {
+                cart[existingItemIndex].quantity += parseInt(quantity);
+            } else {
+                cart.push({ name, price, quantity: parseInt(quantity) });
+            }
+
+            // Save cart to local storage
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+            // Show cart modal
+            $('#cartModal').modal('show');
+            updateCartContent();
+        });
+
+        // Remove item from cart
+        $(document).on('click', '.remove-item', function() {
+            const index = $(this).data('index');
+            cart.splice(index, 1); // Remove item from the cart
+            localStorage.setItem('cart', JSON.stringify(cart)); // Update local storage
+            updateCartContent(); // Refresh cart content
+        });
+
+        // Clear cart functionality
+        $('#clear-cart-button').on('click', function() {
+            cart = []; // Empty the cart
+            localStorage.removeItem('cart'); // Remove from local storage
+            updateCartContent(); // Refresh cart content
+        });
+
+        // Star rating functionality
+        $(document).on('click', '.star', function() {
+            const ratingValue = $(this).data('value'); // Get the value of the clicked star
+            const ratingContainer = $(this).parent(); // Get the parent rating container
+            ratingContainer.attr('data-rating', ratingValue); // Set the rating value
+
+            // Remove the selected class from all stars
+            ratingContainer.find('.star').removeClass('selected');
+
+            // Add the selected class to the clicked star and all previous stars
+            $(this).addClass('selected');
+            $(this).prevAll('.star').addClass('selected');
+
+            // Update the product's data-rating attribute
+            const productItem = ratingContainer.closest('.product-item');
+            productItem.attr('data-rating', ratingValue);
+        });
+
+        // Apply filters
+        $('#applyFilter').on('click', function() {
+            const category = $('#category').val();
+            const priceMin = parseFloat($('#priceMin').val()) || 0;
+            const priceMax = parseFloat($('#priceMax').val()) || Infinity;
+
+            $('.product-item').show(); // Show all items initially
+
+            $('.product-item').filter(function() {
+                const itemCategory = $(this).data('category');
+                const itemPrice = parseFloat($(this).data('price'));
+                const itemRating = parseInt($(this).data('rating'));
+
+                // Filter conditions
+                const isCategoryMatch = category === 'all' || itemCategory === category;
+                const isPriceMatch = itemPrice >= priceMin && itemPrice <= priceMax;
+
+                return !(isCategoryMatch && isPriceMatch);
+            }).hide(); // Hide non-matching items
+        });
+    });
+</script>
+</body>
+</html>

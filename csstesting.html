@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seasonal Products</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            margin: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px; /* Space between boxes */
+        }
+
+        .items {
+            width: 200px;
+            text-align: center;
+            padding: 10px;
+            background-color: white;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+        }
+
+        .items img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .items h1 {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        .items p {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+
+        .items input {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .items input:hover {
+            background-color: #45a049;
+        }
+
+        /* Hover effect with scaling and orange shadow */
+        .items:hover {
+            transform: scale(1.05); /* Slight increase in size */
+            box-shadow: 0 4px 15px rgba(255, 165, 0, 0.7); /* Orange shadow */
+            border: 2px solid orange; /* Outer border changes to orange on hover */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Seasonal Products</h1>
+    <div class="container">
+        <div class="items" onclick="window.location.href='winter.html'">
+            <img src="jeas1.jpg" alt="Winter Product">
+            <h1>Winter</h1>
+            <input type="submit" value="Buy Now">
+        </div>
+        <div class="items" onclick="window.location.href='summer.html'">
+            <img src="jewelry.jpg" alt="Summer Product">
+            <h1>Summer</h1>
+            <input type="submit" value="Buy Now">
+        </div>
+        <div class="items" onclick="window.location.href='autumn.html'">
+            <img src="dress.jpg" alt="Autumn Product">
+            <h1>Autumn</h1>
+            <input type="submit" value="Buy Now">
+        </div>
+        <div class="items" onclick="window.location.href='spring.html'">
+            <img src="dress.jpg" alt="Spring Product">
+            <h1>Spring</h1>
+            <input type="submit" value="Buy Now">
+        </div>
+    </div>
+
+</body>
+</html>

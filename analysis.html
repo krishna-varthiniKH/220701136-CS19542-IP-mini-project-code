@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Four-Season Color Analysis</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="icon" type="image/x-icon" href="title.png">
+  <style>
+   nav{
+    background-color:black;
+   }
+    .color-sample {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin: 10px;
+      cursor: pointer;
+    }
+    .product {
+      margin-bottom: 20px;
+    }
+   
+    #color-section {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    #selected-color-info {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    #rightimage{
+
+        margin-top:8%;
+    }
+
+    #leftimage{
+
+       margin-bottom:30%;
+}
+
+#marginn{
+
+    margin-top:40px;
+}
+
+.popup-message {
+      display: none;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background-color: #28a745;
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+    }
+  
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+
+  <header>
+    <nav>
+        <ul>
+
+            <li><img src="logo.png" alt="Logo" class="logo" ></li>
+            <!-- Search Bar -->
+            <li><input type="search" placeholder="Search..." id="mySearch"></li>
+            <li><a href="websitestylika.html">Home</a></li>
+            <li class="dropdown">
+                <a href="analysis.html" class="dropbtn">Analysis</a>
+                <div class="dropdown-content">
+                <a href="#analysisvideo">Analysis Wheel</a>
+                <a href="#analysiscolour">Right Or Wrong</a>
+                <a href="#fourseason">FOur Season</a>
+            </div>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="winterproduct.html" class="dropbtn">Product</a>
+                <div class="dropdown-content">
+                    <a href="winterproduct.html">Winter</a>
+                    <a href="summerproduct.html">Summer</a>
+                    <a href="autumnproduct.html">Autumn</a>
+                    <a href="springproduct.html">Spring</a>
+                </div>
+            </li>
+            </li>
+            <li><a href="carting.html"><i class="fa fa-shopping-cart" style="font-size:24px"></i></a></li>
+            <!-- <li><button class="login-btn">Login</button></li> -->
+            <li><a href="http://localhost/regis.php" class="login-btn">Login</a></li>
+            <!-- <li><button class="login-btn">login<a href="login.html"></a></button></li> -->
+
+        </ul>
+    </nav>
+</header>
+
+
+  <!-- Header Section  style="color:#f17203;" -->
+  <div class="container mt-5">
+
+    <!-- <br><br><br><br><br><br><br><br><br><br><br><br> -->
+    <h1 class="text-center"  id="marginn">Four-Season Color Analysis</h1>
+  </div>
+
+  <section id="analysis">
+    <section id="content-split" class="split-section">
+        <div class="left-content"  id="leftimage">
+            <img src="https://cdn.prod.website-files.com/5eca30fd2b50b671e2107b06/60b90075876b092b75b4f3c4_Four%20Seasons%20Colour%20Analysis.webp" alt="Color Analysis Image" class="content-image" style="width: 80%; height: 80%;">
+        </div>
+        <div class="right-content" id="rightimage">
+            <img src="https://cdn.prod.website-files.com/5eca30fd2b50b671e2107b06/60b901684522377f66490fd7_Four%20Seasons%20Colour%20Analysis%20Examples.webp" alt="Color Analysis Image" class="content-image" style="width: 90%; height: 90%;">
+            
+        </div>
+    </section>
+
+    <center  >
+    <div  id="analysisvideo">
+    <img src="https://www.fhinds.co.uk/Admin/Images/Editor/Blog/2022/11/Seasonal%20Colour%20Analysis/SeasonalColourAnalysis1.jpg" alt="Color Analysis Image" class="content-image" style="width: 50%; height: 60%;">
+    </div>
+        <br><br>
+
+        <div  id="analysiscolour">
+    <img src="https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/themes/2149859089/settings_images/DagxzqeJTqGwgBTTInz8_colour-analysis-before-after.png" alt="Color Analysis Image" class="content-image" style="width: 80%; height: 80%;"></center>
+</div>
+</section>
+ <h1 class="text-center">Discover the perfect colors for each season and shop your favorites!</h1>
+  <!-- Season Selector -->
+  <div class="container mt-3"  id="fourseason">
+    <div class="row text-center">
+      <div class="col">
+        <button class="btn btn-outline-dark" onclick="loadSeason('spring')">Spring</button>
+      </div>
+      <div class="col">
+        <button class="btn btn-outline-dark" onclick="loadSeason('summer')">Summer</button>
+      </div>
+      <div class="col">
+        <button class="btn btn-outline-dark" onclick="loadSeason('autumn')">Autumn</button>
+      </div>
+      <div class="col">
+        <button class="btn btn-outline-dark" onclick="loadSeason('winter')">Winter</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Color Analysis Section -->
+  <div id="color-section" class="container mt-5">
+    <h3 class="text-center">Select a season to view color analysis.</h3>
+  </div>
+
+  <!-- Selected Color Information -->
+  <div id="selected-color-info" class="container">
+    <h2 id="selected-color-name">Select a color to see details</h2>
+    <p id="color-description"></p>
+  </div>
+
+  <!-- Seasonal Fashion Products -->
+  <div class="container mt-5">
+    <h2 class="text-center">Seasonal Fashion Products</h2>
+   
+  </div>
+  <div class="row" id="product-list"></div>
+  <script>
+    const seasonColors = {
+      spring: {
+        '#FFD700': 'Golden Yellow: A bright and cheerful color that reflects the freshness of spring.',
+        '#98FB98': 'Pale Green: A soft and delicate color symbolizing new growth and nature.',
+        '#FF69B4': 'Hot Pink: A playful and fun color for spring wardrobes.',
+        '#FFB6C1': 'Light Pink: A romantic and soft tone, perfect for spring dresses and accessories.',
+        '#FFFFE0': 'Light Yellow: A warm, sunny color that adds brightness to any outfit.'
+      },
+      summer: {
+        '#87CEFA': 'Sky Blue: A light and airy color, perfect for summer dresses and tops.',
+        '#ADD8E6': 'Light Blue: A cool and calming shade, ideal for summer beachwear.',
+        '#FFE4B5': 'Moccasin: A soft and warm neutral tone for casual summer outfits.',
+        '#FFFACD': 'Lemon Chiffon: A fresh and lively yellow for summer accessories.',
+        '#FFC0CB': 'Light Pink: A gentle pink that brings a soft femininity to summer wear.'
+      },
+      autumn: {
+        '#FF4500': 'Orange Red: A fiery and bold color representing the vibrant hues of autumn leaves.',
+        '#D2691E': 'Chocolate Brown: A rich and earthy tone, perfect for autumn outerwear.',
+        '#B8860B': 'Dark Goldenrod: A warm and golden color that adds depth to fall fashion.',
+        '#8B4513': 'Saddle Brown: A deep, rustic color for cozy sweaters and boots.',
+        '#F4A460': 'Sandy Brown: A soft, neutral tone that pairs well with autumn layers.'
+      },
+      winter: {
+        '#1f3c88': 'Deep Navy: A strong and sophisticated shade, perfect for winter jackets and coats.',
+        '#5f9ea0': 'Teal: A versatile color that brings a pop of brightness to dull winter days.',
+        '#2f4f4f': 'Charcoal Grey: A classic neutral color that pairs well with almost anything.',
+        '#4682b4': 'Steel Blue: A calming and cool color ideal for sweaters and scarves.',
+        '#708090': 'Slate Grey: A subdued yet stylish color, great for winter accessories.'
+      }
+    };
+
+    const seasonProducts = {
+      spring: [
+        { name: "Golden Yellow Dress", price: 80, image: "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSvymctDy0WggF5vPn7WQ5XYrsAj3Cn9d10msLaZFIlwk0-zXlVnEhKlcHfkYZrld5CPVmW3G6uMEzlqe6H9ssVUvT12xEw1eEDS4sJZGk3" },
+        { name: "Pale Green Skirt", price: 45, image: "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQOBSxmJekadvV005jJLp6532NHs89XOaHWoFhHwQ4BaQ1pf94bUKCEyzAWfCougzC8cEASLx1N3gSHAzrCx8Kk9JtknP3LTaAUgUEin85Q&usqp=CAE" },
+        { name: "Hot Pink Blouse", price: 60, image: "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRTEfEENvjepPFobw4tCz3t5clxsqzLWHK2Emoxth9W1fI6ujJ93aAVV2ny75W690FuB1W-S3tNthkDTEVpNYuXdhHOldMCpnz10zbj86Y&usqp=CAE" },
+      ],
+      summer: [
+        { name: "Sky Blue Sundress", price: 85, image: "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcTCOQg0Rns-vK7oeKnt4B-X5yb1frc5E7JZ1WT_GqlB_LTlOoOK8m_r90Tjo4K5l_IuTFdEjYwB4kFgk_HaEe4fzk3SE4QFvSyB2Xz3rFaT&usqp=CAE" },
+        { name: "Lemon Chiffon ", price: 25, image: "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRow77nhSk1k-v5dzKvphoUx2xJo7WHmpTkZioCKnDI8F9eEe7ynSA8mQ6VirhQUpqK4Kt0wNG4RIDxJLqYZHZC7hBb2SOoI7SUHd3mZ0o&usqp=CAE" },
+        { name: "Light Pink ", price: 50, image: "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQc9D9GoDKWNI3-YIidHRHVIKn6lYaP3pCUedPZEcemzfhXEWqtstzK4U0AWgqyfUqFvMLqVYd5cYXsWmQpVAt11h-CNIEEldcnbu2A0ZCG9uQlLqwr4LAsPQ&usqp=CAE" },
+      ],
+      autumn: [
+        { name: "Orange Red", price: 120, image: "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcSsbZNcgRqzbnP8Usg5Es-0vK4Z2dh6oLKisPkYFp2C13tjoZwiw5Okca0YnSGj7v0842Hrsg7P6kFjKPcsJeGuw3UF-NW_3YFKOHNDwXi-&usqp=CAE" },
+        { name: "Dark Goldenrod", price: 110, image: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRGARpoxEZJN871o57hhsQAUpzV3da7ya-tQx55onHsHsBeMMDEDxQy2DypYnqdS_Lk9LZtdWpF7RUDc9OE3mN_6KH3OKFK6dg9RMq7Yrc&usqp=CAE" },
+        { name: "Saddle Brown", price: 70, image: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQTvv44UgKVeeAY6CBi44FPyEU8jYsXDBRR89bFIHFuUah_Ye2I7FarXEt7YvDmTSKgiWjZQ_r-7tw-is43as9kpDEcJFFVo_2tPJlFdTY-&usqp=CAE" },
+      ],
+      winter: [
+        { name: "Deep Navy", price: 120, image: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQ3CsMoylHcAR4Er6lgg6l0LacNvJhzbAIP_6pfWn7N-rk4Bi3UWPTwfwdmT1KNGVrGxxi04YVFIL8Flhj1QeDz20udxz-gouro_qbVetUK&usqp=CAE" },
+        { name: "Teal Scarf", price: 30, image: "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSAJ6MTqffGOUGCfP8-iGCUS7_D4SLYAT2s7MGneQOkxCBgNopHzxFE7RfqJ5Zmb68Hkl1w1qrB-zzN9_Xl3FUogp_Rnb_OlCIgJoDq8MZARg9MCBNWnnHOgg&usqp=CAE" },
+        { name: "Charcoal Grey Sweater", price: 65, image: "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRO-BlzB02irIs1Y7yqoNA2rU0_aTOdlTeKrmXVWRw7s9y915Mxt6qbd9aePdi-TM4xkVp6grAFGDihxdP45iMcglAwx5EGhpvOeCCOjztx&usqp=CAE" },
+      ]
+    };
+
+    function loadSeason(season) {
+      const colorSection = document.getElementById('color-section');
+      colorSection.innerHTML = '';
+
+      const colors = seasonColors[season];
+      for (const [color, description] of Object.entries(colors)) {
+        const colorDiv = document.createElement('div');
+        colorDiv.className = 'color-sample';
+        colorDiv.style.backgroundColor = color;
+        colorDiv.onclick = function() {
+          selectColor(color, description);
+        };
+        colorSection.appendChild(colorDiv);
+      }
+
+      loadProducts(season);
+    }
+
+    function selectColor(color, description) {
+      document.getElementById('selected-color-name').innerText = description.split(':')[0];
+      document.getElementById('color-description').innerText = description;
+      document.getElementById('selected-color-info').style.backgroundColor = color;
+    }
+
+    function loadProducts(season) {
+      const productList = document.getElementById('product-list');
+      productList.innerHTML = '';
+
+      const products = seasonProducts[season];
+      products.forEach(product => {
+        const productDiv = document.createElement('div');
+        productDiv.className = 'col-md-4 product';
+        productDiv.innerHTML = `
+          <div class="card">
+            <img src="${product.image}" class="card-img-top" alt="${product.name}">
+            <div class="card-body">
+              <h5 class="card-title">${product.name}</h5>
+              <p class="card-text">$${product.price}</p>
+              <input type="number" placeholder="Quantity" value="1">
+              <br><br>
+<button class="btn btn-primary" id="popupMessage" onclick="addToCart('${product.name}', ${product.price}, '${product.image}', this.previousElementSibling.value)" alert("add the item")>Add to Cart</button>
+
+            </div>
+          </div>
+        `;
+        productList.appendChild(productDiv);
+      });
+    }
+
+    function addToCart(name, price, image,quantity) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push({ name, price, image, quantity: 1 });
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartCount();
+      alert(`${name} added to cart!`);
+
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+      cartCount += quantity;
+      document.getElementById('cart-count').innerText = cartCount;
+
+      // Show popup message
+      const popupMessage = document.getElementById('popupMessage');
+      popupMessage.style.display = 'block';
+      setTimeout(() => {
+        popupMessage.style.display = 'none';
+      }, 2000);
+    }
+
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      document.getElementById('cart-count').innerText = cart.length;
+    }
+
+    window.onload = function() {
+      updateCartCount();
+    };
+
+    document.getElementById('mybuttn').onclick = popu;
+
+    function popu() {
+    alert('Button was clicked!');
+}
+
+    
+  </script>
+
+</body>
+</html>

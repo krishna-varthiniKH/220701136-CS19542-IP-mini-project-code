@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart</title>
+  <link rel="icon" type="image/x-icon" href="title.png" >
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .cart-item {
+      margin-bottom: 20px;
+    }
+    .total-price {
+      font-weight: bold;
+      font-size: 1.5em;
+    }
+    .buy-now {
+      margin-top: 20px;
+    }
+    #billModal .modal-body {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    
+    /* Bill modal styles */
+    .modal-content {
+      border-radius: 15px; /* Rounded corners for the modal */
+    }
+
+    .modal-header {
+      background-color: #007bff; /* Bootstrap primary color */
+      color: white; /* White text for header */
+    }
+
+    .modal-title {
+      font-size: 1.5rem; /* Larger font size for title */
+    }
+
+    .table {
+      border-collapse: collapse; /* Collapse borders for table */
+    }
+
+    .table th, .table td {
+      padding: 10px; /* Add padding for table cells */
+      text-align: left; /* Align text to the left */
+    }
+
+    .table th {
+      background-color: #f2f2f2; /* Light grey background for table header */
+      border-bottom: 2px solid #007bff; /* Blue border for header */
+    }
+
+    .table tr:nth-child(even) {
+      background-color: #f9f9f9; /* Zebra striping for even rows */
+    }
+
+    .table tr:hover {
+      background-color: #eaeaea; /* Highlight row on hover */
+    }
+
+    .modal-body h4 {
+      font-size: 1.25rem; /* Slightly larger font for total */
+      font-weight: bold; /* Bold text for emphasis */
+      margin-top: 20px; /* Margin above total */
+    }
+
+    .modal-footer {
+      border-top: 2px solid #007bff; /* Blue border at footer */
+    }
+
+    .modal-footer .btn {
+      background-color: #007bff; /* Match button color to modal header */
+      color: white; /* White text for footer buttons */
+    }
+
+    .modal-footer .btn:hover {
+      background-color: #0056b3; /* Darker blue on hover */
+    }
+    .nav-link {
+      font-size: 1.2rem; /* Increased font size */
+      margin: 0 40px; /* Added margin for spacing */
+      color:white;
+    }
+
+    .nav-link:hover, 
+    .form-control:hover, 
+    .btn-outline-success:hover {
+      background-color: white; /* Change background color on hover */
+      color: #2243ff; /* Change text color on hover */
+      border-radius:4px;
+    }
+    
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-black">
+      <div class="container-fluid ">
+        <form class="d-flex me-auto" role="search" id="search-form" id="colour" onsubmit="event.preventDefault(); searchProducts();">
+          <img src="logo.png" class="card-img-top" style="width:20%; height: 50px;" alt="Product Image">
+          <li><br></li>
+          <a class="navbar-brand nav-link" href="#">Shopping Cart</a>
+          <input class="form-control me-2" type="search" id="search-input" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-primary" type="submit">Search</button>
+        </form>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- bg-white  -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="websitestylika.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="winterproduct.html">Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link cart-badge" href="carting.html">
+                Cart <span class="badge bg-primary" id="cart-count">0</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  
+  <!-- Container -->
+  <div class="container mt-5">
+    <h2>Your Shopping Cart</h2>
+    <div id="cart-items"></div>
+    <div class="total-price" id="total-price">Total: $0</div>
+    
+    <!-- Discount Code Input -->
+    <div class="mb-3">
+      <label for="discount-code" class="form-label">Discount Code</label>
+      <input type="text" id="discount-code" class="form-control" placeholder="Enter discount code">
+      <button class="btn btn-secondary mt-2" onclick="applyDiscount()">Apply Discount</button>
+    </div>
+
+    <button class="btn btn-primary buy-now"   id="buyNowBtn"  onclick="showBill()">Buy Now</button>
+  </div>
+
+  <!-- Bill Modal -->
+  <div class="modal fade bg-dark" id="billModal" tabindex="-1" aria-labelledby="billModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg bg-dark">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="billModalLabel">Bill</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="logo.png" alt="Logo" style="width: 150px; display: block; margin: 0 auto;"/>
+          <table class="table mt-3">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price Each</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody id="bill-items"></tbody>
+          </table>
+          <p id="bill-subtotal"></p>
+          <p id="bill-tax"></p>
+          <p id="bill-discount"></p>
+          <h4 id="bill-total"></h4>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="printBill()">Print Bill</button>
+          <button type="button" class="btn btn-secondary" onclick="sendEmail()">Email Bill</button>
+          <button type="button" class="btn btn-secondary" onclick="saveBill()">Save Bill</button>
+          <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="saveBillToDatabase()">Confirm Purchase</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const TAX_RATE = 0.08; // 8% tax rate
+    const DISCOUNTS = {
+      "SAVE10": 10, // 10% discount
+      "SAVE20": 20, // 20% discount
+      "FREESHIP": 5  // $5 discount
+    };
+    let currentDiscount = 0; // Store the current discount
+
+    function loadCartItems() {
+      const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+      const cartItemsContainer = document.getElementById('cart-items');
+      cartItemsContainer.innerHTML = '';
+
+      if (cartItems.length === 0) {
+        cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+        document.getElementById('total-price').innerText = `Total: $0`;
+        return;
+      }
+
+      let total = 0;
+      cartItems.forEach((item, index) => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+
+        const cartItem = document.createElement('div');
+        cartItem.className = 'cart-item card';
+        cartItem.innerHTML = `
+          <div class="card-body">
+            <h5 class="card-title">${item.name}</h5>
+            <p class="card-text">Price: $${item.price} each</p>
+            <p class="card-text">Total: $<span id="item-total-${index}">${itemTotal.toFixed(2)}</span></p>
+            <img src="${item.image}" alt="${item.name}" style="width: 100px;">
+            <div class="input-group mb-3">
+              <input type="number" class="form-control" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)">
+              <button class="btn btn-danger" onclick="removeFromCart(${index})">Remove</button>
+            </div>
+          </div>
+        `;
+        cartItemsContainer.appendChild(cartItem);
+      });
+
+      document.getElementById('total-price').innerText = `Total: $${total.toFixed(2)}`;
+    }
+
+    function updateQuantity(index, newQuantity) {
+      const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+      cartItems[index].quantity = parseInt(newQuantity);
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+      loadCartItems();
+    }
+
+    function removeFromCart(index) {
+      const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+      cartItems.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+      loadCartItems();
+    }
+
+    function applyDiscount() {
+      const discountCode = document.getElementById('discount-code').value;
+      currentDiscount = DISCOUNTS[discountCode] || 0; // Get discount percentage or 0 if invalid
+      if (currentDiscount) {
+        alert(`Discount code applied! You will receive ${currentDiscount}% off your total.`);
+      } else {
+        alert('Invalid discount code.');
+      }
+    }
+
+    function showBill() {
+      const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+      if (cartItems.length === 0) {
+        alert('Your cart is empty!');
+        return;
+      }
+
+      let billItemsContainer = document.getElementById('bill-items');
+      billItemsContainer.innerHTML = '';
+      let subtotal = 0;
+
+      cartItems.forEach((item) => {
+        const itemTotal = item.price * item.quantity;
+        subtotal += itemTotal;
+
+        const billItem = document.createElement('tr');
+        billItem.innerHTML = `
+          <td>${item.name}</td>
+          <td>${item.quantity}</td>
+          <td>$${item.price.toFixed(2)}</td>
+          <td>$${itemTotal.toFixed(2)}</td>
+        `;
+        billItemsContainer.appendChild(billItem);
+      });
+
+      const tax = subtotal * TAX_RATE;
+      const total = subtotal + tax - (subtotal * currentDiscount / 100);
+
+      document.getElementById('bill-subtotal').innerText = `Subtotal: $${subtotal.toFixed(2)}`;
+      document.getElementById('bill-tax').innerText = `Tax (8%): $${tax.toFixed(2)}`;
+      document.getElementById('bill-discount').innerText = `Discount: $${(subtotal * currentDiscount / 100).toFixed(2)}`;
+      document.getElementById('bill-total').innerText = `Total: $${total.toFixed(2)}`;
+
+      // Show the modal
+      const billModal = new bootstrap.Modal(document.getElementById('billModal'));
+      billModal.show();
+    }
+
+    function printBill() {
+      window.print();
+    }
+
+    function sendEmail() {
+      const subject = encodeURIComponent('Your Bill');
+      const body = encodeURIComponent(document.getElementById('bill-total').innerText);
+      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    }
+
+    function saveBill() {
+      const billContent = document.getElementById('bill-items').innerHTML;
+      const blob = new Blob([billContent], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'bill.txt';
+      link.click();
+    }
+
+    function saveBillToDatabase() {
+      const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+      const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+      const tax = subtotal * TAX_RATE;
+      const total = subtotal + tax - (subtotal * currentDiscount / 100);
+      const productData = cartItems.map(item => ({
+        name: item.name,
+        quantity: item.quantity,
+        price: item.price,
+        total: item.price * item.quantity
+      }));
+
+      // Use AJAX to send data to a PHP script
+      fetch('save_bill.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          products: productData,
+          subtotal: subtotal,
+          tax: tax,
+          discount: (subtotal * currentDiscount / 100),
+          total: total
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert(data.message);
+        // Optionally clear the cart after saving the bill
+        localStorage.removeItem('cart');
+        loadCartItems();
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    }
+
+    // Load cart items on page load
+    window.onload = loadCartItems;
+
+    document.getElementById('buyNowBtn').addEventListener('click', function() {
+    saveBillToDatabase();
+});
+
+function saveBillToDatabase() {
+    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+    const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+    const tax = subtotal * TAX_RATE; // Ensure TAX_RATE is defined
+    const total = subtotal + tax - (subtotal * currentDiscount / 100); // Ensure currentDiscount is defined
+    const productData = cartItems.map(item => ({
+        name: item.name,
+        quantity: item.quantity,
+        price: item.price,
+        total: item.price * item.quantity
+    }));
+
+    console.log(productData); // Check if productData is correctly populated
+
+    fetch('save_bill.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            products: productData,
+            subtotal: subtotal,
+            tax: tax,
+            discount: (subtotal * currentDiscount / 100),
+            total: total
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        // Clear the cart if needed
+        localStorage.removeItem('cart');
+        loadCartItems(); // Ensure this function is defined to reload cart items
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

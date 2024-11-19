@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>inde Color Analysis Shopping</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/x-icon" href="title.png">
+    <link rel="stylesheet" href="stylles.css">
+    <!-- <script src="script.js" defer></script> -->
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <header>
+        <nav>
+            <ul>
+                <!-- Logo -->
+                <li><img src="logo.png" alt="Logo" class="logo"></li>
+                <!-- Search Bar -->
+                <li><input type="search" placeholder="Search..." id="mySearch"></li>
+                <li><a href="#home">Home</a></li>
+                <li class="dropdown">
+                    <a href="#analysis" class="dropbtn">Analysis</a>
+                    <div class="dropdown-content">
+                        <a href="#analysis">Website</a>
+                        <a href="#analysis">Youtube</a>
+                    </div>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#products" class="dropbtn">Product</a>
+                    <div class="dropdown-content">
+                        <a href="#product-winter">Winter</a>
+                        <a href="#product-summer">Summer</a>
+                        <a href="#product-autumn">Autumn</a>
+                        <a href="#product-spring">Spring</a>
+                    </div>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#about" class="dropbtn">About</a>
+                    <div class="dropdown-content">
+                        <a href="#about">Website Name</a>
+                        <a href="#about">Logo</a>
+                        <a href="#about">Speciality</a>
+                        <a href="#about">Uses</a>
+                    </div>
+                </li>
+
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#history">History</a></li>
+                <li><a href="cart.html"><i class="fa fa-shopping-cart" style="font-size:24px"></i></a></li>
+                <li><button class="login-btn">Login</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Background Video Section (now placed under navbar) -->
+    <section id="home">
+        <div class="video-wrapper">
+            <video autoplay muted loop id="bg-video">
+                <source src="background-video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="offer-details">
+                <h1>Exclusive Offers</h1>
+                <p>Shop Now and Get 50% Off on Selected Items</p>
+                <button>Shop Now</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="about">
+        <h2 ><i>Speciality Of This Website:</i></h2>
+                <p>Introducing a new online shopping(<b style="color:#f17203;">Stylika</b>) filter based on <b>color analysis!</b> Customers can now effortlessly <b>select <i style="color:#f17203;">clothing, jewelry, and makeup by their seasonal color</i></b> profile—<b><i style="color:#f17203;">spring, summer, autumn, or winter</i></b>. This innovative feature allows users to refine their searches according to colors that <b style="color:#f17203;">enhance their natural beauty, ensuring a more personalized shopping experience</b>. By filtering products through these seasonal palettes, shoppers can confidently choose items that harmonize with their skin tone, hair color, and overall aesthetic. Embrace <b>the convenience of finding the perfect match for your style,</b> all while enjoying the benefits of color theory in fashion and beauty!</p>
+    </section>
+    <hr>
+        <!-- New Section: Content Split into Left and Right -->
+        <section id="content-split" class="split-section">
+            <div class="left-content">
+                <h1>what is colour analysis?</h1>
+                <p>Color analysis is the process of determining which colors best suit an individual’s natural features, such as <b>skin tone, eye, and hair color</b> to enhance their overall appearance. It is often used in fashion, makeup, and design to identify complementary color palettes.</p>
+                <br>
+                <img src="green colour.png" alt="Color Analysis Image" class="content-image" style="width: 50%; height: 50%;">
+                <br>
+                <br>
+                <br><br>
+                <hr>
+                <br>
+                <h3>Watch the video to learn more:</h3>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/C3ZjNSQvOuU?si=OeLXWFLZC0FXKJRd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <div class="right-content">
+                <h2>Try Your colour analysis!</h2>
+                <h2>Find Your season here</h2>
+                <div style="width: 600px; height: 400px; border: 1px solid black;">
+                    <iframe src="https://colorwise.me/" style="width: 100%; height: 210%; border: none;"></iframe>
+                  </div>
+                  
+            </div>
+        </section>
+
+    <!-- Products Section -->
+    <section id="products" class="product-section">
+        <h2>Products</h2>
+        <div class="product-grid">
+            <div id="product-summer" class="product-item">
+                <img src="dress.jpg" alt="Dress">
+                <h3>Summer Dress</h3>
+                <p>$49.99</p>
+            </div>
+            <div id="product-winter" class="product-item">
+                <img src="jewelry.jpg" alt="Jewelry">
+                <h3>Elegant Jewelry</h3>
+                <p>$29.99</p>
+            </div>
+            <div id="product-autumn" class="product-item">
+                <img src="makeup.jpg" alt="Makeup">
+                <h3>Makeup Set</h3>
+                <p>$19.99</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <h2>Contact Us</h2>
+        <p>Email: support@coloranalysis.com</p>
+        <p>Phone: +1 234 567 890</p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Color Analysis Shopping</p>
+    </footer>
+
+</body>
+</html>

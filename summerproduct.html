@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ip Product Page with Filters</title>
+  <link rel="icon" type="image/x-icon" href="title.png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .product-card {
+      margin-bottom: 20px;
+    }
+    .filter-section {
+      border-right: 1px solid #ddd;
+      padding-right: 20px;
+    }
+    .cart-badge {
+      position: relative;
+    }
+    .cart-badge .badge {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+    }
+    .popup-message {
+      display: none;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      background-color: #28a745;
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+    }
+
+    .nav-link {
+      font-size: 1.2rem; /* Increased font size */
+      margin: 0 40px; /* Added margin for spacing */
+      color:white;
+    }
+
+    .nav-link:hover, 
+    .form-control:hover, 
+    .btn-outline-success:hover {
+      background-color: white; /* Change background color on hover */
+      color: #2243ff; /* Change text color on hover */
+      border-radius:4px;
+    }
+
+    body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        .hero {
+            position: relative; /* Enable positioning for the overlay */
+            background-image: url('summerpict.jpg'); /* Replace with your background image URL */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+            padding: 20px;
+            color: white;
+            text-align: center; /* Center text */
+            opacity: 0; /* Start hidden for fade-in effect */
+            animation: fadeIn 1s forwards; /* Animation for fading in */
+            border-radius: 10px;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1; /* End state of the animation */
+            }
+        }
+
+        /* Darken background */
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.20); /* Black overlay with 40% opacity */
+            z-index: 1; /* Ensure the overlay is above the background */
+        }
+
+        .content {
+            position: relative; /* Position relative to allow content to appear above overlay */
+            z-index: 2; /* Ensure text is above the overlay */
+            opacity: 0; /* Start hidden for fade-in effect */
+            animation: fadeIn 1s forwards 0.5s; /* Delay animation */
+        }
+
+        .button {
+            background-color: #ff6b6b;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s; /* Add transform on hover */
+            display: inline-block; /* Ensure button is treated as a block for centering */
+        }
+
+        .button:hover {
+            background-color: #ff4d4d;
+            transform: scale(1.1); /* Scale effect on hover */
+        }
+
+        section {
+            padding: 20px;
+            text-align: center;
+            opacity: 0; /* Start hidden for fade-in effect */
+            animation: fadeIn 1s forwards 1.5s; /* Delay animation */
+        }
+
+        /* Blinking Effect */
+        .blinking {
+            animation: blink 1s infinite; /* Blink every second */
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1; /* Fully visible */
+            }
+            50% {
+                opacity: 0; /* Fully invisible */
+            }
+        }
+
+        /* Typewriter effect */
+        .typewriter {
+            font-size: 2em; /* Adjust font size as needed */
+            overflow: hidden; /* Ensures the text is hidden until typed */
+            white-space: nowrap; /* Prevents line breaks */
+            border-right: 4px solid; /* Creates the cursor effect */
+            width: 0; /* Start with no width */
+            animation: typing 5s steps(30) forwards, blink-caret 0.75s step-end infinite; /* Typewriter effect */
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: white; }
+        }
+
+       
+        .video-container {
+            margin: 20px 0; /* Margin for spacing */
+        }
+  </style>
+</head>
+<body>
+
+
+  <div class="hero">
+    <div class="content">
+        <h2 class="typewriter">Summer Season....</h2> <!-- Typewriter effect -->
+        <p>Discover Your Season</p>
+        <a href="#discover" class="button">Discover</a>
+    </div>
+  </div>
+  <!-- Navbar -->
+  
+  <header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-black"  id="discover">
+    <div class="container-fluid ">
+      <form class="d-flex me-auto" role="search" id="search-form" id="colour" onsubmit="event.preventDefault(); searchProducts();">
+        <img src="logo.png" class="card-img-top" style="width:20%; height: 50px;" alt="Product Image">
+        <li><br></li>
+        <a class="navbar-brand nav-link" href="#">Summer Collection</a>
+        <input class="form-control me-2" type="search" id="search-input" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-primary" type="submit">Search</button>
+      </form>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="websitestylika.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="summerproduct.html">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href=".html">Summer</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link cart-badge" href="carting.html">
+              Cart <span class="badge bg-primary" id="cart-count">0</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+  <!-- Container -->
+  <div class="container mt-5">
+    <div class="row">
+      <!-- Filter Section -->
+      <div class="col-md-3 filter-section">
+        <h5>Summer Filters</h5>
+
+        <!-- Category Filter -->
+        <div class="mb-3">
+          <label for="categoryFilter" class="form-label">Product Categories</label>
+          <select class="form-select" id="categoryFilter">
+            <option value="">All</option>
+            <option value="dress">Dress</option>
+            <option value="jewelry">Jewelry</option>
+            <option value="makeup">Makeup</option>
+          </select>
+        </div>
+        <!-- Soft pink blush, rose lipstick, taupe or grey eyeshadow -->
+        <!-- Color Filter -->
+        <div class="mb-3">
+          <label for="colorFilter" class="form-label">Color (For Dress)</label>
+          <select class="form-select" id="colorFilter">
+            <option value="">All</option>
+            <option value="Soft pastel pink">Soft pastel pink</option>
+            <option value="light blue">light blue</option>
+            <option value="soft grey">soft grey</option>
+            <option value="lavender">lavender</option>
+            <option value="cool mint">cool mint</option>
+          </select>
+        </div>
+
+        <!-- Metal Type Filter -->
+        <div class="mb-3">
+          <label for="metalFilter" class="form-label">Metal Type (For Jewelry)</label>
+          <select class="form-select" id="metalFilter">
+            <option value="">All</option>
+            <option value="white gold">white gold</option>
+            <option value="Silver">Silver</option>
+            <option value="Platinum">Platinum</option>
+          </select>
+        </div>
+
+        <!-- Price Filter -->
+        <div class="mb-3">
+          <label for="priceFilter" class="form-label">Price Range</label>
+          <input type="range" class="form-range" id="priceFilter" min="0" max="1000" value="1000" oninput="updatePriceLabel(this.value)">
+          <span id="priceLabel">₹1000</span>
+        </div>
+
+        <button class="btn btn-secondary" onclick="clearFilters()">Clear Filters</button>
+      </div>
+
+      <!-- Product Section -->
+      <div class="col-md-9 row" id="product-list">
+        <!-- Product Cards -->
+
+        <div class="col-md-4 product-card" data-category="jewelry" data-metal="white gold" data-price="500">
+          <div class="card">
+            <img src="https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQgVSGR0EzsGNed0yVmC73JH8JfkyM5J65ANquEqlpKybTtLpbe-0sqmVOALkW84fIltMZIcWzDC0KdR7IgqDgaXHDYDxt72Q" class="card-img-top" alt="Blue Dress"  width="300" height="300">
+            <div class="card-body">
+              <h5 class="card-title">white gold</h5>
+              <p class="card-text">Price: ₹500</p>
+              <input type="number" class="form-control mb-2" placeholder="Quantity" min="1" value="1">
+              <button class="btn btn-primary" onclick="addToCart('white gold', 500, 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQgVSGR0EzsGNed0yVmC73JH8JfkyM5J65ANquEqlpKybTtLpbe-0sqmVOALkW84fIltMZIcWzDC0KdR7IgqDgaXHDYDxt72Q', this.previousElementSibling.value)">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+       
+            <div class="col-md-4 product-card" data-category="jewelry" data-metal="Platinum" data-price="400">
+              <div class="card">
+                <img src="https://img.freepik.com/free-photo/shiny-jewelry-crystal-platinum-gold-gemstone-drops-generated-by-ai_188544-10734.jpg" class="card-img-top" alt="Blue Dress"  width="300" height="300">
+                <div class="card-body">
+                  <h5 class="card-title">Platinum</h5>
+                  <p class="card-text">Price: ₹400</p>
+                  <input type="number" class="form-control mb-2" placeholder="Quantity" min="1" value="1">
+                  <button class="btn btn-primary" onclick="addToCart('Platinum', 400, 'https://img.freepik.com/free-photo/shiny-jewelry-crystal-platinum-gold-gemstone-drops-generated-by-ai_188544-10734.jpg', this.previousElementSibling.value)">Add to Cart</button>
+                </div>
+              </div>
+            </div>
+
+
+<div class="col-md-4 product-card" data-category="makeup" data-color="Soft pink blush" data-price="20">
+<div class="card">
+<img src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSM7BrKpk3tPB1YtZHdcRtkF38T-IAXlK1BnzcgHDrtapzP2r78o6kjXT0E5Rl7A6pUucMu7_KdIB3xX1ufgC5iYNQYW8J_OmV10TDKyoBIRu-AbD9qo7Az" class="card-img-top" alt="Red Lipstick"  width="300" height="300">
+<div class="card-body">
+<h5 class="card-title">Soft pink blush</h5>
+<p class="card-text">Price: ₹20</p>
+<input type="number" class="form-control mb-2" placeholder="Quantity" min="1" value="1">
+<button class="btn btn-primary" onclick="addToCart('Soft pink blush', 20, 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSM7BrKpk3tPB1YtZHdcRtkF38T-IAXlK1BnzcgHDrtapzP2r78o6kjXT0E5Rl7A6pUucMu7_KdIB3xX1ufgC5iYNQYW8J_OmV10TDKyoBIRu-AbD9qo7Az', this.previousElementSibling.value)">Add to Cart</button>
+</div>
+</div>
+</div>
+
+
+        <div class="col-md-4 product-card" data-category="dress" data-color="Soft pastel pink" data-price="500">
+          <div class="card">
+            <img src="https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTI87wzLS0GqoiFrlWNWw6YSczg85BRkKB-SNv1S8M3BoMEN9G9_BTYtmrwIYDByaKBMkFBHS8Fz2TOsGk-yQ87mxtHUJQNTpCbq-xAqVcbNPwmlq2joZlHuA" class="card-img-top" alt="Blue Dress"  width="300" height="300">
+            <div class="card-body">
+              <h5 class="card-title">Soft pastel pink</h5>
+              <p class="card-text">Price: ₹500</p>
+              <input type="number" class="form-control mb-2" placeholder="Quantity" min="1" value="1">
+              <button class="btn btn-primary" onclick="addToCart('Soft pastel pink', 500, 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcTI87wzLS0GqoiFrlWNWw6YSczg85BRkKB-SNv1S8M3BoMEN9G9_BTYtmrwIYDByaKBMkFBHS8Fz2TOsGk-yQ87mxtHUJQNTpCbq-xAqVcbNPwmlq2joZlHuA', this.previousElementSibling.value)">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+            <div class="col-md-4 product-card" data-category="dress" data-color="light blue" data-price="600">
+              <div class="card">
+                <img src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSVuU2HiktmjoGkGuRKWjpiIi9SdPFcm6xT_5wsr7aFipeGL0EkPqDrwW-NIDdS_gm1E700-GkKsFV_NHymvp1VwCRG9h81Br9xD1eNPvk" class="card-img-top" alt="Blue Dress"  width="300" height="300">
+                <div class="card-body">
+                  <h5 class="card-title">light blue</h5>
+                  <p class="card-text">Price: ₹600</p>
+                  <input type="number" class="form-control mb-2" placeholder="Quantity" min="1" value="1">
+                  <button class="btn btn-primary" onclick="addToCart('light blue', 600, 'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSVuU2HiktmjoGkGuRKWjpiIi9SdPFcm6xT_5wsr7aFipeGL0EkPqDrwW-NIDdS_gm1E700-GkKsFV_NHymvp1VwCRG9h81Br9xD1eNPvk', this.previousElementSibling.value)">Add to Cart</button>
+                </div>
+              </div>
+            </div>
+
+
+                <div class="col-md-4 product-card" data-category="dress" data-color="soft grey" data-price="500">
+                  <div class="card">
+                    <img src="https://images.bestsellerclothing.in/data/vero-moda/dec-18-2021/159159902_g2.jpg?width=488&height=650&mode=fill&fill=blur&format=auto&dpr=1.2" class="card-img-top" alt="Blue Dress"  width="300" height="300">
+                    <div class="card-body">
+                      <h5 class="card-title">soft grey</h5>
+                      <p class="card-text">Price: ₹500</p>
+                      <input type="number" class="form-control mb-2" placeholder="Quantity" min="1" value="1">
+                      <button class="btn btn-primary" onclick="addToCart('soft grey', 500, 'https://images.bestsellerclothing.in/data/vero-moda/dec-18-2021/159159902_g2.jpg?width=488&height=650&mode=fill&fill=blur&format=auto&dpr=1.2', this.previousElementSibling.value)">Add to Cart</button>
+                    </div>
+                  </div>
+                </div>
+
+               
+                    
+
+                    
+                        <div class="col-md-4 product-card" data-category="dress" data-color="cool mint" data-price="600">
+                          <div class="card">
+                            <img src="https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRZtBQE1lCyxad-2ynNAIfdEio9UxMVJyBdQilXAkGlD1D-piIjckTQotb7WDwvYfVAeuhT_nF1TT-tiMVd9Sit0oRrlHX_AFfgafy31VWehGJan6NQMonb" class="card-img-top" alt="Blue Dress"  width="300" height="300">
+                            <div class="card-body">
+                              <h5 class="card-title">cool mint</h5>
+                              <p class="card-text">Price: ₹600</p>
+                              <input type="number" class="form-control mb-2" placeholder="Quantity" min="1" value="1">
+                              <button class="btn btn-primary" onclick="addToCart('cool mint', 600, 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRZtBQE1lCyxad-2ynNAIfdEio9UxMVJyBdQilXAkGlD1D-piIjckTQotb7WDwvYfVAeuhT_nF1TT-tiMVd9Sit0oRrlHX_AFfgafy31VWehGJan6NQMonb', this.previousElementSibling.value)">Add to Cart</button>
+                            </div>
+                          </div>
+                        </div>
+
+                        
+                            <div class="col-md-4 product-card" data-category="jewelry" data-metal="Silver" data-price="800">
+                              <div class="card">
+                                <img src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRFu_t0vABySMHRZcLDrOvS4FKwc3JX52cX7K71_4VHnkmW9pXVzCKM1eiUAu-W665pIzKQAWGhcdKFsU4ip2wdZycdnrBLiiN1LKz-oL5ayfeTDASfiMPb4Q&usqp=CAE" class="card-img-top" alt="Blue Dress"  width="300" height="300">
+                                <div class="card-body">
+                                  <h5 class="card-title">Silver</h5>
+                                  <p class="card-text">Price: ₹800</p>
+                                  <input type="number" class="form-control mb-2" placeholder="Quantity" min="1" value="1">
+                                  <button class="btn btn-primary" onclick="addToCart('Silver', 800, 'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRFu_t0vABySMHRZcLDrOvS4FKwc3JX52cX7K71_4VHnkmW9pXVzCKM1eiUAu-W665pIzKQAWGhcdKFsU4ip2wdZycdnrBLiiN1LKz-oL5ayfeTDASfiMPb4Q&usqp=CAE', this.previousElementSibling.value)">Add to Cart</button>
+                                </div>
+                              </div>
+                            </div>
+
+                            
+                               
+
+        <div class="col-md-4 product-card" data-category="makeup" data-color="rose lipstick" data-price="80">
+          <div class="card">
+            <img src="https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQekjcMq8Db1xkYNcpvPOhEpBDBAOOfSqH5AVDA3iLcPNFFHzHo7MmFF036SfNTJ6IXT9OfcfcnaA6WOHnVeqHm8eeqntiGhJi2ETIiz88dl8-FAeTGm0DGTw" class="card-img-top" alt="Gold Jewelry"  width="300" height="300">
+            <div class="card-body">
+              <h5 class="card-title">rose lipstick</h5>
+              <p class="card-text">Price: ₹80</p>
+              <input type="number" class="form-control mb-2" placeholder="Quantity" min="1" value="1">
+              <button class="btn btn-primary" onclick="addToCart('Gold Jewelry', 80, 'https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcQekjcMq8Db1xkYNcpvPOhEpBDBAOOfSqH5AVDA3iLcPNFFHzHo7MmFF036SfNTJ6IXT9OfcfcnaA6WOHnVeqHm8eeqntiGhJi2ETIiz88dl8-FAeTGm0DGTw', this.previousElementSibling.value)">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 product-card" data-category="makeup" data-color="taupe eyeshadow" data-price="150">
+            <div class="card">
+              <img src="https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRH6rNdyuRbgfwOo-MsX4hwa2ruCU0pKlsJJCMK8abbziECU9V5PkBR0gUqRdimW629zJj-6EUs3oFkhh1C6sKIVpMz1QDx55NVyPpwQ16QIFn98eJ_4I4G" class="card-img-top" alt="Gold Jewelry"  width="300" height="300">
+              <div class="card-body">
+                <h5 class="card-title">taupe eyeshadow</h5>
+                <p class="card-text">Price: ₹150</p>
+                <input type="number" class="form-control mb-2" placeholder="Quantity" min="1" value="1">
+                <button class="btn btn-primary" onclick="addToCart('taupe eyeshadow', 150, 'https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRH6rNdyuRbgfwOo-MsX4hwa2ruCU0pKlsJJCMK8abbziECU9V5PkBR0gUqRdimW629zJj-6EUs3oFkhh1C6sKIVpMz1QDx55NVyPpwQ16QIFn98eJ_4I4G', this.previousElementSibling.value)">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 product-card" data-category="makeup" data-color="grey eyeshadow" data-price="200">
+            <div class="card">
+              <img src="https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcT-_qldHRiosNMIV7pstSyZQJfUsYzAmFhrXdYuNQ9bytICc9vN3Dxl5nfsas67cnpPkc4aGhClEV5M-r7U2M-15YEVkiEPE9Iw5XENCS4zufSsQmViLJsI" class="card-img-top" alt="Gold Jewelry"  width="300" height="300">
+              <div class="card-body">
+                <h5 class="card-title">grey eyeshadow</h5>
+                <p class="card-text">Price: ₹200</p>
+                <input type="number" class="form-control mb-2" placeholder="Quantity" min="1" value="1">
+                <button class="btn btn-primary" onclick="addToCart('grey eyeshadow', 200, 'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcT-_qldHRiosNMIV7pstSyZQJfUsYzAmFhrXdYuNQ9bytICc9vN3Dxl5nfsas67cnpPkc4aGhClEV5M-r7U2M-15YEVkiEPE9Iw5XENCS4zufSsQmViLJsI', this.previousElementSibling.value)">Add to Cart</button>
+              </div>
+            </div>
+          </div>
+
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="popup-message" id="popupMessage">Item added to cart!</div>
+
+  <script>
+    let cartCount = 0;
+
+    function addToCart(name, price, imgSrc, quantity) {
+      const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+      const itemIndex = cartItems.findIndex(item => item.name === name);
+      quantity = parseInt(quantity);
+
+      if (itemIndex > -1) {
+        cartItems[itemIndex].quantity += quantity;
+      } else {
+        cartItems.push({ name, price, image: imgSrc, quantity });
+      }
+      
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+      cartCount += quantity;
+      document.getElementById('cart-count').innerText = cartCount;
+
+      // Show popup message
+      const popupMessage = document.getElementById('popupMessage');
+      popupMessage.style.display = 'block';
+      setTimeout(() => {
+        popupMessage.style.display = 'none';
+      }, 2000);
+    }
+
+    function updatePriceLabel(value) {
+      document.getElementById('priceLabel').innerText = `$${value}`;
+    }
+
+    function filterProducts() {
+      const category = document.getElementById('categoryFilter').value;
+      const color = document.getElementById('colorFilter').value;
+      const metal = document.getElementById('metalFilter').value;
+      const price = document.getElementById('priceFilter').value;
+
+      const products = document.querySelectorAll('.product-card');
+
+      products.forEach(product => {
+        const productCategory = product.getAttribute('data-category');
+        const productColor = product.getAttribute('data-color');
+        const productMetal = product.getAttribute('data-metal');
+        const productPrice = parseInt(product.getAttribute('data-price'));
+
+        let isVisible = true;
+
+        if (category && productCategory !== category) {
+          isVisible = false;
+        }
+        if (color && productColor !== color) {
+          isVisible = false;
+        }
+        if (metal && productMetal !== metal) {
+          isVisible = false;
+        }
+        if (productPrice > price) {
+          isVisible = false;
+        }
+
+        product.style.display = isVisible ? 'block' : 'none';
+      });
+    }
+
+    document.getElementById('categoryFilter').addEventListener('change', filterProducts);
+    document.getElementById('colorFilter').addEventListener('change', filterProducts);
+    document.getElementById('metalFilter').addEventListener('change', filterProducts);
+    document.getElementById('priceFilter').addEventListener('input', filterProducts);
+
+    function clearFilters() {
+      document.getElementById('categoryFilter').value = '';
+      document.getElementById('colorFilter').value = '';
+      document.getElementById('metalFilter').value = '';
+      document.getElementById('priceFilter').value = 1000;
+      document.getElementById('priceLabel').innerText = '$1000';
+      filterProducts();
+    }
+
+    function searchProducts() {
+      const searchTerm = document.getElementById('search-input').value.toLowerCase();
+      const categoryFilter = document.getElementById('categoryFilter').value;
+      const colorFilter = document.getElementById('colorFilter').value;
+      const metalFilter = document.getElementById('metalFilter').value;
+      const priceFilter = document.getElementById('priceFilter').value;
+
+      const productCards = document.querySelectorAll('.product-card');
+
+      productCards.forEach(card => {
+        const category = card.dataset.category || '';
+        const color = card.dataset.color || '';
+        const metal = card.dataset.metal || '';
+        const price = parseInt(card.dataset.price) || 0;
+
+        const matchesSearchTerm = card.innerText.toLowerCase().includes(searchTerm);
+        const matchesCategory = categoryFilter === '' || category === categoryFilter;
+        const matchesColor = colorFilter === '' || color === colorFilter;
+        const matchesMetal = metalFilter === '' || metal === metalFilter;
+        const matchesPrice = price <= priceFilter;
+
+        if (matchesSearchTerm && matchesCategory && matchesColor && matchesMetal && matchesPrice) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Initial filter application
+    filterProducts();
+
+    const text = "";
+        let index = 0;
+
+        function typeWriter() {
+            if (index < text.length) {
+                document.querySelector('.typewriter').textContent += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, 100); // Adjust typing speed here
+            }
+        }
+
+        // Start the typewriter effect
+        document.addEventListener('DOMContentLoaded', (event) => {
+            typeWriter();
+        });
+  </script>
+
+</body>
+</html>

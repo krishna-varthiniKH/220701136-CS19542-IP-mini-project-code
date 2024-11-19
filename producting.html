@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fixed Background Image Example</title>
+  <style>
+    /* General styling */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Background image styling */
+    .bg-fixed {
+      background-image: url('wins.jpg'); /* Replace with your image URL */
+      background-size: cover;  /* Ensure the background covers the entire area */
+      background-position: center; /* Center the background image */
+      background-attachment: fixed; /* This makes the background fixed when scrolling */
+      height: 100vh; /* Viewport height */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+    }
+
+    /* Content sections to enable scrolling */
+    .content {
+      padding: 50px;
+      background-color: #f1f1f1;
+    }
+
+    h1 {
+      font-size: 50px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Section with a fixed background image -->
+  <div class="bg-fixed">
+    <h1>Fixed Background Image</h1>
+  </div>
+
+  <!-- Content section to scroll -->
+  <div class="content">
+    <h2>Scroll down for more content</h2>
+    <p>This is a content section. As you scroll, the background image remains fixed in place, while the rest of the page moves. You can add multiple sections below to demonstrate the scroll effect further.</p>
+  </div>
+
+  <div class="content">
+    <h2>Another Section</h2>
+    <p>Add more content here. The background image will remain fixed.</p>
+  </div>
+
+  <div class="content">
+    <h2>Final Section</h2>
+    <p>This is the last section of the page, demonstrating the fixed background.</p>
+  </div>
+
+</body>
+</html>
